@@ -14,10 +14,12 @@ import { Tag } from "@/types/note";
 
 function NotesClient() {
   const params = useParams<{ slug: Tag[] | "all" }>();
-   const tag =
+  const tag =
     params.slug[0] === "all"
       ? undefined
-      : ["Meeting", "Personal", "Shopping", "Todo", "Work"].includes(params.slug[0])
+      : ["Meeting", "Personal", "Shopping", "Todo", "Work"].includes(
+            params.slug[0],
+          )
         ? params.slug[0]
         : notFound();
 
