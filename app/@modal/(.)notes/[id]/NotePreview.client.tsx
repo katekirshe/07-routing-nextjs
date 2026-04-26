@@ -1,14 +1,16 @@
 "use client";
 import Modal from "@/components/Modal/Modal";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { fetchNoteById } from "@/lib/api";
 import css from "./NotePreview.module.css";
 import Loading from "@/app/loading";
 
-export default function NotePreview() {
-  const params = useParams();
-  const id = params.id as string;
+type NotePreviewProps = {
+  id: string;
+};
+
+export default function NotePreview({ id }: NotePreviewProps) {
   const router = useRouter();
   const closeModal = () => {
     router.back();

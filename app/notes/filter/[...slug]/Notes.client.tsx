@@ -9,26 +9,24 @@ import Pagination from "@/components/Pagination/Pagination";
 import NoteList from "@/components/NoteList/NoteList";
 import Modal from "@/components/Modal/Modal";
 import NoteForm from "@/components/NoteForm/NoteForm";
-import { notFound, useParams } from "next/navigation";
 import { Tag } from "@/types/note";
 
-function NotesClient() {
-  const params = useParams<{ slug: Tag[] | "all" }>();
-  const tag =
-    params.slug[0] === "all"
-      ? undefined
-      : ["Meeting", "Personal", "Shopping", "Todo", "Work"].includes(
-            params.slug[0],
-          )
-        ? params.slug[0]
-        : notFound();
+interface NotesClientProps {
+  tag?: Tag;
+}
 
+function NotesClient({ tag }: NotesClientProps) {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data } = useQuery({
     queryKey: ["Notes", page, search, tag],
-    queryFn: () => fetchNotes({ page, search, tag: tag as Tag }),
+    queryFn: () =>
+      fetchNotes({
+        page,
+        search,
+        tag,
+      }),
     placeholderData: keepPreviousData,
     refetchOnMount: false,
   });

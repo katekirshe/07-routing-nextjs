@@ -17,7 +17,7 @@ export default async function DocsPage({ params }: Props) {
     slug[0] === "all"
       ? undefined
       : ["Meeting", "Personal", "Shopping", "Todo", "Work"].includes(slug[0])
-        ? slug[0]
+        ? (slug[0] as Tag)
         : undefined;
 
   const queryClient = new QueryClient();
@@ -27,11 +27,9 @@ export default async function DocsPage({ params }: Props) {
     queryFn: () => fetchNotes({ page: 1, search: "", tag: tag as Tag }),
   });
 
-  // console.log("Notes", 1, "", tag);
-
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <NotesClient />
+      <NotesClient tag={tag} />
     </HydrationBoundary>
   );
 }
